@@ -7,28 +7,30 @@
 
 using namespace std;
 
-string ReadFile(const GLchar* path)
-{
-    string content;
-    ifstream file;
-    file.exceptions(ifstream::failbit | ifstream::badbit);
-
-    try
+namespace {
+    string ReadFile(const GLchar* path)
     {
-        file.open(path);
+        string content;
+        ifstream file;
+        file.exceptions(ifstream::failbit | ifstream::badbit);
 
-        stringstream ss;
-        ss << file.rdbuf();
-        file.close();
+        try
+        {
+            file.open(path);
 
-        content = ss.str();
+            stringstream ss;
+            ss << file.rdbuf();
+            file.close();
+
+            content = ss.str();
+        }
+        catch (const ifstream::failure e)
+        {
+            cout << "Failed to read shader file:\n" << e.what() << endl;
+        }
+
+        return content;
     }
-    catch (const ifstream::failure e)
-    {
-        cout << "Failed to read shader file:\n" << e.what() << endl;
-    }
-
-    return content;
 }
 
 bool CompileShader(GLenum type, const GLchar * sourcePath, GLuint& shader)

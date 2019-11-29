@@ -5,6 +5,9 @@
     <ClCompile Include="src\shader.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\texture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
@@ -16,9 +19,18 @@
     <Filter Include="shaders">
       <UniqueIdentifier>{28ba7940-b931-4dee-bd77-c7a0e3627280}</UniqueIdentifier>
     </Filter>
+    <Filter Include="textures">
+      <UniqueIdentifier>{50c6a69f-66ae-4a4c-beea-0603bb409b7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\shader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\texture.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\glews.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -28,6 +40,12 @@
     </CopyFileToFolders>
     <CopyFileToFolders Include="shaders\basicVS.glsl">
       <Filter>shaders</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="textures\container.jpg">
+      <Filter>textures</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="textures\awesomeface.png">
+      <Filter>textures</Filter>
     </CopyFileToFolders>
   </ItemGroup>
 </Project>
