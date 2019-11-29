@@ -5,6 +5,17 @@
 
 using namespace std;
 
+GLFWwindow* CreateMainWindow(int width = 800, int height = 600)
+{
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+    const auto window = glfwCreateWindow(width, height, "LearnOpenGL", nullptr, nullptr);
+    return window;
+}
+
 void OnKeyEvent(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
     if (key == GLFW_KEY_ESCAPE)
@@ -33,13 +44,13 @@ bool CompileShader(GLenum type, const char* sourceCode, GLuint& shader)
 
 bool CompileVertexShader(GLuint& shader)
 {
-    constexpr auto sourceCode = "#version 330 core\nlayout(location = 0) in vec3 position;\nvoid main()\n{\ngl_Position = vec4(position.x, position.y, position.z, 1.0);\n}";
+    constexpr auto sourceCode = "#version 330 core\nlayout(location = 0) in vec3 position;\nout vec3 vertexColor;\nvoid main()\n{\ngl_Position = vec4(position.xyz, 1.0);vertexColor = vec3((position.x + 1.0f) / 2.0f, (position.y + 1.0f) / 2.0f, (position.z + 1.0f) / 2.0f);\n}";
     return CompileShader(GL_VERTEX_SHADER, sourceCode, shader);
 }
 
 bool CompileFragmentShader(GLuint& shader)
 {
-    constexpr auto sourceCode = "#version 330 core\nout vec4 color;\nvoid main()\n{\ncolor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n}";
+    constexpr auto sourceCode = "#version 330 core\nin vec3 vertexColor;\nuniform float ourAlpha;\nout vec4 color;\nvoid main()\n{\ncolor = vec4(ourAlpha, vertexColor.y, vertexColor.z, 1);\n}";
     return CompileShader(GL_FRAGMENT_SHADER, sourceCode, shader);
 }
 
@@ -86,7 +97,7 @@ bool BuildShaderProgram(GLuint& program)
     return success;
 }
 
-GLuint CreateTriangle()
+GLuint CreateRectangle()
 {
     const GLfloat half = 0.5f;
     GLfloat vertices[] = {
@@ -128,12 +139,7 @@ int main()
 {
     glfwInit();
     
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-
-    const auto window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
+    const auto window = CreateMainWindow();
     if (nullptr == window)
     {
         cout << "Failed to create window" << endl;
@@ -154,7 +160,7 @@ int main()
     glfwSetKeyCallback(window, OnKeyEvent);
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-    const auto vao = CreateTriangle();
+    const auto vao = CreateRectangle();
 
     GLuint program;
     if (!BuildShaderProgram(program))
@@ -164,14 +170,19 @@ int main()
         return -1;
     }
 
+    GLint locOfShaderVariable = glGetUniformLocation(program, "ourAlpha");
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
 
         glClear(GL_COLOR_BUFFER_BIT);
 
+        GLdouble currentTime = glfwGetTime();
+        const auto alpha = sin(currentTime) / 2 + 0.5;
         glUseProgram(program);
+        glUniform1f(locOfShaderVariable, static_cast<float>(alpha));
         glBindVertexArray(vao);
+
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 
