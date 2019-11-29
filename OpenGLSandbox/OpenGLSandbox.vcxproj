@@ -70,19 +70,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\_Git\glew-2.1.0\include;C:\_Git\glfw-3.3\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\_Git\glew-2.1.0\include;C:\_Git\glfw-3.3\include;include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\_Git\glfw-3.3\bin\$(Platform)\$(Configuration);C:\_Git\glew-2.1.0\lib\Release\$(Platform);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\_Git\glew-2.1.0\include;C:\_Git\glfw-3.3\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\_Git\glew-2.1.0\include;C:\_Git\glfw-3.3\include;include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\_Git\glfw-3.3\bin\$(Platform)\$(Configuration);C:\_Git\glew-2.1.0\lib\Release\$(Platform);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\_Git\glew-2.1.0\include;C:\_Git\glfw-3.3\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\_Git\glew-2.1.0\include;C:\_Git\glfw-3.3\include;include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\_Git\glfw-3.3\bin\$(Platform)\$(Configuration);C:\_Git\glew-2.1.0\lib\Release\$(Platform);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\_Git\glew-2.1.0\include;C:\_Git\glfw-3.3\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\_Git\glew-2.1.0\include;C:\_Git\glfw-3.3\include;include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\_Git\glfw-3.3\bin\$(Platform)\$(Configuration);C:\_Git\glew-2.1.0\lib\Release\$(Platform);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -139,6 +139,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\shader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="shaders\basicFS.glsl">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="shaders\basicVS.glsl">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

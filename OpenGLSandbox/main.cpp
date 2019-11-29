@@ -1,5 +1,5 @@
-#define GLEW_STATIC
-#include <GL/glew.h>
+#include "shader.h"
+
 #include <GLFW/glfw3.h>
 #include <iostream>
 
@@ -20,81 +20,6 @@ void OnKeyEvent(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
     if (key == GLFW_KEY_ESCAPE)
         glfwSetWindowShouldClose(window, GL_TRUE);
-}
-
-bool CompileShader(GLenum type, const char* sourceCode, GLuint& shader)
-{
-    shader = glCreateShader(type);
-    glShaderSource(shader, 1, &sourceCode, nullptr);
-    glCompileShader(shader);
-
-    GLint success;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-
-    GLchar infoLog[512];
-    if (!success)
-    {
-        glGetShaderInfoLog(shader, sizeof(infoLog), nullptr, infoLog);
-        cout << infoLog << endl;
-        return false;
-    }
-
-    return true;
-}
-
-bool CompileVertexShader(GLuint& shader)
-{
-    constexpr auto sourceCode = "#version 330 core\nlayout(location = 0) in vec3 position;\nout vec3 vertexColor;\nvoid main()\n{\ngl_Position = vec4(position.xyz, 1.0);vertexColor = vec3((position.x + 1.0f) / 2.0f, (position.y + 1.0f) / 2.0f, (position.z + 1.0f) / 2.0f);\n}";
-    return CompileShader(GL_VERTEX_SHADER, sourceCode, shader);
-}
-
-bool CompileFragmentShader(GLuint& shader)
-{
-    constexpr auto sourceCode = "#version 330 core\nin vec3 vertexColor;\nuniform float ourAlpha;\nout vec4 color;\nvoid main()\n{\ncolor = vec4(ourAlpha, vertexColor.y, vertexColor.z, 1);\n}";
-    return CompileShader(GL_FRAGMENT_SHADER, sourceCode, shader);
-}
-
-bool LinkShaders(GLuint vertexShader, GLuint fragmentShader, GLuint& program)
-{
-    program = glCreateProgram();
-    glAttachShader(program, vertexShader);
-    glAttachShader(program, fragmentShader);
-    glLinkProgram(program);
-
-    GLint success;
-    glGetProgramiv(program, GL_LINK_STATUS, &success);
-
-    GLchar infoLog[512];
-    if (!success)
-    {
-        glGetProgramInfoLog(program, sizeof(infoLog), nullptr, infoLog);
-        cout << infoLog << endl;
-        return false;
-    }
-
-    return true;
-
-}
-
-bool BuildShaderProgram(GLuint& program)
-{
-    GLuint vertexShader, fragmentShader;
-
-    if (!CompileVertexShader(vertexShader))
-        return false;
-
-    if (!CompileFragmentShader(fragmentShader))
-    {
-        glDeleteShader(vertexShader);
-        return false;
-    }
-
-    const auto success =  LinkShaders(vertexShader, fragmentShader, program);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-
-    return success;
 }
 
 GLuint CreateRectangle()
@@ -162,15 +87,8 @@ int main()
 
     const auto vao = CreateRectangle();
 
-    GLuint program;
-    if (!BuildShaderProgram(program))
-    {
-        cout << "Failed to build shader." << endl;
-        glfwTerminate();
-        return -1;
-    }
-
-    GLint locOfShaderVariable = glGetUniformLocation(program, "ourAlpha");
+    Shader shader{ "basicVS.glsl", "basicFS.glsl" };
+    GLint locOfShaderVariable = glGetUniformLocation(shader.Program, "ourRed");
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
@@ -179,7 +97,7 @@ int main()
 
         GLdouble currentTime = glfwGetTime();
         const auto alpha = sin(currentTime) / 2 + 0.5;
-        glUseProgram(program);
+        shader.Use();
         glUniform1f(locOfShaderVariable, static_cast<float>(alpha));
         glBindVertexArray(vao);
 
