@@ -3,9 +3,14 @@
 #include "mesh.h"
 
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
 using namespace std;
+
+glm::mat4::value_type translationZ = 0;
 
 GLFWwindow* CreateMainWindow(int width = 800, int height = 600)
 {
@@ -20,8 +25,24 @@ GLFWwindow* CreateMainWindow(int width = 800, int height = 600)
 
 void OnKeyEvent(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-    if (key == GLFW_KEY_ESCAPE)
+    if (action != GLFW_PRESS)
+        return;
+
+    constexpr glm::mat4::value_type step = 0.033f;
+    switch (key)
+    {
+    case GLFW_KEY_ESCAPE:
         glfwSetWindowShouldClose(window, GL_TRUE);
+        break;
+    case GLFW_KEY_G:
+        translationZ -= step;
+        break;
+    case GLFW_KEY_H:
+        translationZ += step;
+        break;
+    default:
+        break;
+    }
 }
 
 Mesh CreateRectangle()
@@ -45,7 +66,7 @@ Mesh CreateRectangle()
 int main()
 {
     glfwInit();
-    
+
     const auto window = CreateMainWindow();
     if (nullptr == window)
     {
@@ -67,15 +88,18 @@ int main()
     glfwSetKeyCallback(window, OnKeyEvent);
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
+    const auto mesh = CreateRectangle();
+
     Texture texWood{ "container.jpg" };
     Texture texSmiley{ "awesomeface.png", 1 };
-
-    const auto mesh = CreateRectangle();
 
     Shader shader{ "basicVS.glsl", "basicFS.glsl" };
     texWood.Init(shader.Program, "ourTexture1");
     texSmiley.Init(shader.Program, "ourTexture2");
     GLint locOfShaderVariable = glGetUniformLocation(shader.Program, "texBlendFactor");
+    GLint locOfShaderVariable2 = glGetUniformLocation(shader.Program, "worldTransform");
+    glm::mat4 worldTransform = glm::translate(glm::mat4(1.f), glm::vec3(0.0f, 0.0f, translationZ));
+
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
@@ -84,6 +108,8 @@ int main()
         const auto blendFactor = sin(currentTime) / 4 + 0.25;
         shader.Use();
         glUniform1f(locOfShaderVariable, static_cast<float>(blendFactor));
+        worldTransform[3].x = translationZ;
+        glUniformMatrix4fv(locOfShaderVariable2, 1, GL_FALSE, glm::value_ptr(worldTransform));
 
         mesh.Use();
         texWood.Use();
