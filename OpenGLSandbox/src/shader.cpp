@@ -26,7 +26,7 @@ namespace {
         }
         catch (const ifstream::failure e)
         {
-            cout << "Failed to read shader file:\n" << e.what() << endl;
+            cout << "Failed to read shader file '" << path << "':\n" << e.what() << endl;
         }
 
         return content;

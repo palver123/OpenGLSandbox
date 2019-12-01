@@ -52,6 +52,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="Dependencies.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
@@ -69,21 +70,8 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>include;C:\_Git\glfw-3.3\include;C:\_Git\glew-2.1.0\include;C:\_Git\glm-0.9.9.6;C:\_Git\Simple OpenGL Image Library\src;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\_Git\glfw-3.3\bin\$(Platform)\$(Configuration);C:\_Git\glew-2.1.0\lib\Release\$(Platform);c:\_Git\Simple OpenGL Image Library\projects\VC9\$(Configuration);$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>include;C:\_Git\glfw-3.3\include;C:\_Git\glew-2.1.0\include;C:\_Git\glm-0.9.9.6;C:\_Git\Simple OpenGL Image Library\src;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\_Git\glfw-3.3\bin\$(Platform)\$(Configuration);C:\_Git\glew-2.1.0\lib\Release\$(Platform);c:\_Git\Simple OpenGL Image Library\projects\VC9\$(Configuration);$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>include;C:\_Git\glfw-3.3\include;C:\_Git\glew-2.1.0\include;C:\_Git\glm-0.9.9.6;C:\_Git\Simple OpenGL Image Library\src;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\_Git\glfw-3.3\bin\$(Platform)\$(Configuration);C:\_Git\glew-2.1.0\lib\Release\$(Platform);c:\_Git\Simple OpenGL Image Library\projects\VC9\$(Configuration);$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>include;C:\_Git\glfw-3.3\include;C:\_Git\glew-2.1.0\include;C:\_Git\glm-0.9.9.6;C:\_Git\Simple OpenGL Image Library\src;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\_Git\glfw-3.3\bin\$(Platform)\$(Configuration);C:\_Git\glew-2.1.0\lib\Release\$(Platform);c:\_Git\Simple OpenGL Image Library\projects\VC9\$(Configuration);$(LibraryPath)</LibraryPath>
+  <PropertyGroup>
+    <IncludePath>include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -92,9 +80,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -103,9 +88,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -119,7 +101,6 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -134,7 +115,6 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
