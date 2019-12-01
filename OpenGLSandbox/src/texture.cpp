@@ -21,6 +21,11 @@ Texture::Texture(const char* filename, unsigned texUnit):
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+Texture::~Texture()
+{
+    glDeleteTextures(1, &ID);
+}
+
 void Texture::Init(GLuint shaderProgram, const GLchar* nameOfVariable)
 {
     _locOfSamplerVariable = glGetUniformLocation(shaderProgram, nameOfVariable);
