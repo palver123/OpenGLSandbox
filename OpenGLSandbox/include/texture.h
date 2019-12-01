@@ -13,5 +13,5 @@ public:
     ~Texture();
 
     void Init(GLuint shaderProgram, const GLchar* nameOfVariable);
-    void Use() const;
+    void Bind() const;
 };

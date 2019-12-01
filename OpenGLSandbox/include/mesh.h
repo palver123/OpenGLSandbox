@@ -9,8 +9,15 @@ class Mesh {
 public:
     GLuint ID;
 
+    Mesh(const std::vector<GLfloat>& vertices);
     Mesh(const std::vector<GLfloat>& vertices, const std::vector<GLuint> indices);
     ~Mesh();
 
-    void Use() const;
+    void Bind() const;
 };
+
+namespace primitives
+{
+    Mesh Square(GLfloat halfSize = 0.5f);
+    Mesh Cube();
+}

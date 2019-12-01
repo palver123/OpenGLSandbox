@@ -5,7 +5,7 @@ Texture::Texture(const char* filename, unsigned texUnit):
     _texUnit(texUnit > 15u ? 15u : texUnit)
 {
     glGenTextures(1, &ID);
-    Use();
+    Bind();
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -31,7 +31,7 @@ void Texture::Init(GLuint shaderProgram, const GLchar* nameOfVariable)
     _locOfSamplerVariable = glGetUniformLocation(shaderProgram, nameOfVariable);
 }
 
-void Texture::Use() const
+void Texture::Bind() const
 {
     glActiveTexture(GL_TEXTURE0 + _texUnit);
     glBindTexture(GL_TEXTURE_2D, ID);
