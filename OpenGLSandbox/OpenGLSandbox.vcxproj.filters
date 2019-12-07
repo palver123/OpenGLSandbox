@@ -11,6 +11,9 @@
     <ClCompile Include="src\mesh.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\glad.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
@@ -31,9 +34,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\texture.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\glews.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\mesh.h">

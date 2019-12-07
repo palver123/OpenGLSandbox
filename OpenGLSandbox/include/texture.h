@@ -1,6 +1,6 @@
 #pragma once
 
-#include "glews.h"
+#include <glad\glad.h>
 
 class Texture {
     unsigned int _texUnit;

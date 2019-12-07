@@ -58,13 +58,11 @@ int main()
     }
     glfwMakeContextCurrent(window);
 
-    glewExperimental = GL_TRUE;
-    if (glewInit() != GLEW_OK)
-    {
-        cout << "Failed to initialize GLEW" << endl;
-        glfwTerminate();
-        return -1;
-    }
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cout << "Failed to initialize GLAD" << std::endl;
+		return -1;
+	}
 
     glViewport(0, 0, 800, 600);
     glEnable(GL_DEPTH_TEST);
