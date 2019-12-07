@@ -128,6 +128,7 @@
     <ClInclude Include="include\mesh.h" />
     <ClInclude Include="include\shader.h" />
     <ClInclude Include="include\texture.h" />
+    <ClInclude Include="include\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="shaders\basicFS.glsl">

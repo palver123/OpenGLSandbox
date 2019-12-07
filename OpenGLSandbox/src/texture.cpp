@@ -1,5 +1,6 @@
 #include "texture.h"
-#include "SOIL.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 Texture::Texture(const char* filename, unsigned texUnit):
     _texUnit(texUnit > 15u ? 15u : texUnit)
@@ -12,12 +13,12 @@ Texture::Texture(const char* filename, unsigned texUnit):
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    int width, height;
-    const auto image = SOIL_load_image(filename, &width, &height, 0, SOIL_LOAD_RGB);
+    int width, height, nrChannels;
+    const auto image = stbi_load(filename, &width, &height, &nrChannels, 0);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
     glGenerateMipmap(GL_TEXTURE_2D);
 
-    SOIL_free_image_data(image);
+    stbi_image_free(image);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
