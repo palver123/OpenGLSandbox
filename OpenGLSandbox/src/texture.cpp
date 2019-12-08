@@ -2,7 +2,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-Texture::Texture(const char* filename, unsigned texUnit):
+Texture::Texture(const char* filename, unsigned texUnit, bool transparent):
     _texUnit(texUnit > 15u ? 15u : texUnit)
 {
     glGenTextures(1, &ID);
@@ -14,8 +14,9 @@ Texture::Texture(const char* filename, unsigned texUnit):
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int width, height, nrChannels;
+    stbi_set_flip_vertically_on_load(true);
     const auto image = stbi_load(filename, &width, &height, &nrChannels, 0);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, transparent ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, image);
     glGenerateMipmap(GL_TEXTURE_2D);
 
     stbi_image_free(image);

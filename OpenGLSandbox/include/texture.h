@@ -9,7 +9,7 @@ class Texture {
 public:
     GLuint ID;
 
-    Texture(const char* filename, unsigned texUnit = 0);
+    Texture(const char* filename, unsigned texUnit = 0, bool transparent = false);
     ~Texture();
 
     void Init(GLuint shaderProgram, const GLchar* nameOfVariable);

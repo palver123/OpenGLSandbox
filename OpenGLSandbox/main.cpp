@@ -72,7 +72,7 @@ int main()
     const auto mesh = primitives::Cube();
 
     Texture texWood{ "container.jpg" };
-    Texture texSmiley{ "awesomeface.png", 1 };
+    Texture texSmiley{ "awesomeface.png", 1, true };
 
     Shader shader{ "basicVS.glsl", "basicFS.glsl" };
     texWood.Init(shader.Program, "ourTexture1");
