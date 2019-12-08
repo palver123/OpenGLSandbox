@@ -44,17 +44,19 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="shaders\basicFS.glsl">
+    <None Include="shaders\basicFS.glsl">
       <Filter>shaders</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="shaders\basicVS.glsl">
+    </None>
+    <None Include="shaders\basicVS.glsl">
       <Filter>shaders</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="textures\container.jpg">
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="textures\awesomeface.png">
       <Filter>textures</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="textures\awesomeface.png">
+    </Image>
+    <Image Include="textures\container.jpg">
       <Filter>textures</Filter>
-    </CopyFileToFolders>
+    </Image>
   </ItemGroup>
 </Project>
