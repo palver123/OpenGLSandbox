@@ -62,10 +62,10 @@ int main()
     Shader shader{ "basicVS.glsl", "basicFS.glsl" };
     texWood.Init(shader.Program, "ourTexture1");
     texSmiley.Init(shader.Program, "ourTexture2");
-    GLint locOfShaderVariable = glGetUniformLocation(shader.Program, "texBlendFactor");
-    GLint locOfShaderVariable2 = glGetUniformLocation(shader.Program, "model");
-    GLint locOfShaderVariable3 = glGetUniformLocation(shader.Program, "view");
-    GLint locOfShaderVariable4 = glGetUniformLocation(shader.Program, "projection");
+    GLint locBlendFactor = glGetUniformLocation(shader.Program, "texBlendFactor");
+    GLint locModelM = glGetUniformLocation(shader.Program, "model");
+    GLint locViewM = glGetUniformLocation(shader.Program, "view");
+    GLint locProjM = glGetUniformLocation(shader.Program, "projection");
 
     while (!glfwWindowShouldClose(window))
     {
@@ -79,22 +79,21 @@ int main()
         ProcessInput(window);
 
         const auto blendFactor = sin(currentTime) / 4 + 0.25;
-        glUniform1f(locOfShaderVariable, static_cast<float>(blendFactor));
+        glUniform1f(locBlendFactor, static_cast<float>(blendFactor));
 
         const auto worldTransform = glm::rotate(glm::mat4(1.f), glm::radians((GLfloat)(currentTime * 50.0)), glm::vec3(1.0f, 0.0f, 0.0f));;
         const auto viewTransform = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         const auto projTransform = glm::perspective(45.0f, 4 / 3.0f, 0.1f, 100.0f);
-        glUniformMatrix4fv(locOfShaderVariable2, 1, GL_FALSE, glm::value_ptr(worldTransform));
-        glUniformMatrix4fv(locOfShaderVariable3, 1, GL_FALSE, glm::value_ptr(viewTransform));
-        glUniformMatrix4fv(locOfShaderVariable4, 1, GL_FALSE, glm::value_ptr(projTransform));
+        glUniformMatrix4fv(locModelM, 1, GL_FALSE, glm::value_ptr(worldTransform));
+        glUniformMatrix4fv(locViewM, 1, GL_FALSE, glm::value_ptr(viewTransform));
+        glUniformMatrix4fv(locProjM, 1, GL_FALSE, glm::value_ptr(projTransform));
 
         mesh.Bind();
         texWood.Bind();
         texSmiley.Bind();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        mesh.DrawMe();
         glfwSwapBuffers(window);
     }
 

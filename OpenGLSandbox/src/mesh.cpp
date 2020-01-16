@@ -2,8 +2,6 @@
 
 using namespace std;
 
-constexpr auto siz = sizeof(GLfloat);
-
 namespace {
 	void PrepareInputAssembler()
 	{
@@ -14,7 +12,8 @@ namespace {
 	}
 }
 
-Mesh::Mesh(const vector<GLfloat>& vertices)
+Mesh::Mesh(const vector<GLfloat>& vertices):
+	numTriangles(vertices.size() / kVertexStride * 2)
 {
     glGenVertexArrays(1, &ID);
     Bind();
@@ -22,7 +21,7 @@ Mesh::Mesh(const vector<GLfloat>& vertices)
     // VB
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * siz, vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
 
     // IA
     PrepareInputAssembler();
@@ -37,7 +36,7 @@ Mesh::Mesh(const vector<GLfloat>& vertices, const vector<GLuint> indices) : Mesh
     // IB
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * siz, indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLfloat), indices.data(), GL_STATIC_DRAW);
 
     glBindVertexArray(0);
 }
@@ -53,6 +52,10 @@ Mesh::~Mesh()
 void Mesh::Bind() const
 {
     glBindVertexArray(ID);
+}
+
+void Mesh::DrawMe() const {
+	glDrawArrays(GL_TRIANGLES, 0, numTriangles);
 }
 
 Mesh primitives::Square(GLfloat halfSize)
