@@ -13,7 +13,7 @@ namespace {
 }
 
 Mesh::Mesh(const vector<GLfloat>& vertices):
-	numTriangles(vertices.size() / kVertexStride * 2)
+	numTriangles(static_cast<GLsizei>(vertices.size() / kVertexStride * 2))
 {
     glGenVertexArrays(1, &ID);
     Bind();
