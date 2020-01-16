@@ -7,10 +7,8 @@ namespace {
 	{
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-		glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
-		glEnableVertexAttribArray(2);
 	}
 }
 
@@ -72,14 +70,12 @@ void LineMesh::DrawMe() const {
     v.push_back(ax);	\
     v.push_back(ay);	\
     v.push_back(az);	\
-	v.push_back(1.0f); \
 	v.push_back(x);	\
     v.push_back(y);	\
     v.push_back(z);	\
     v.push_back(ax);	\
     v.push_back(ay);	\
     v.push_back(az);	\
-	v.push_back(-1.0f);
 
 #define EXPAND_START(v, x, y, z, nx, ny, nz) EXPAND(v, x, y, z, nx, ny, nz)
 #define EXPAND_END(v, x, y, z, px, py, pz)  EXPAND(v, x, y, z, px, py, pz)
@@ -88,7 +84,7 @@ LineMesh primitives::ToLineMesh(const std::vector<GLfloat>& coordinates)
 {
 	auto plLength = coordinates.size() / 3;
 	if (plLength < 2 || coordinates.size() % 3 != 0)
-		throw exception("Number of vertices is not OK.");
+		return LineMesh{ {} };
 
 	vector<GLfloat> vertices;
 	vertices.reserve((plLength - 1) * 4 * LineMesh::kVertexStride);

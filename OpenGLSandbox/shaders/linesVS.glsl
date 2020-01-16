@@ -2,7 +2,6 @@
 
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 auxPos;
-layout(location = 2) in float orientation; 
 
 uniform mat4 projection;
 uniform mat4 model;
@@ -29,6 +28,6 @@ void main() {
   normal *= thickness/2.0;
   normal.x /= aspectRatio;
 
-  vec4 offset = vec4(normal * orientation, 0.0, 1.0);
+  vec4 offset = vec4(gl_VertexID % 2 == 0 ? normal : -normal, 0.0, 1.0);
   gl_Position = currentProjected + offset;
 }

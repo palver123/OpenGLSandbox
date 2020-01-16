@@ -8,7 +8,7 @@ class LineMesh {
 	GLsizei numTriangles;
 
 public:
-	static constexpr GLsizei kVertexStride = 7;
+	static constexpr GLsizei kVertexStride = 6;
 	GLuint ID;
 
 	LineMesh(const std::vector<GLfloat>& vertices);
