@@ -7,17 +7,15 @@ namespace {
 	{
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
-		glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(9 * sizeof(GLfloat)));
+		glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
-		glEnableVertexAttribArray(3);
 	}
 }
 
 LineMesh::LineMesh(const vector<GLfloat>& vertices):
-	numTriangles(static_cast<GLsizei>(vertices.size() / 2))
+	numTriangles(static_cast<GLsizei>(vertices.size() / kVertexStride / 2))
 {
 	glGenVertexArrays(1, &ID);
 	Bind();
@@ -67,30 +65,24 @@ void LineMesh::DrawMe() const {
 	glDrawElements(GL_TRIANGLES, 3 * numTriangles, GL_UNSIGNED_INT, nullptr);
 }
 
-#define EXPAND(v, x, y, z, px, py, pz, nx, ny, nz) \
+#define EXPAND(v, x, y, z, ax, ay, az) \
 	v.push_back(x);	\
     v.push_back(y);	\
     v.push_back(z);	\
-    v.push_back(px);	\
-    v.push_back(py);	\
-    v.push_back(pz);	\
-    v.push_back(nx); \
-    v.push_back(ny); \
-    v.push_back(nz); \
+    v.push_back(ax);	\
+    v.push_back(ay);	\
+    v.push_back(az);	\
 	v.push_back(1.0f); \
 	v.push_back(x);	\
     v.push_back(y);	\
     v.push_back(z);	\
-    v.push_back(px);	\
-    v.push_back(py);	\
-    v.push_back(pz);	\
-    v.push_back(nx); \
-    v.push_back(ny); \
-    v.push_back(nz); \
+    v.push_back(ax);	\
+    v.push_back(ay);	\
+    v.push_back(az);	\
 	v.push_back(-1.0f);
 
-#define EXPAND_START(v, x, y, z, nx, ny, nz) EXPAND(v, x, y, z, x, y, z, nx, ny, nz)
-#define EXPAND_END(v, x, y, z, px, py, pz)  EXPAND(v, x, y, z, px, py, pz, x, y, z)
+#define EXPAND_START(v, x, y, z, nx, ny, nz) EXPAND(v, x, y, z, nx, ny, nz)
+#define EXPAND_END(v, x, y, z, px, py, pz)  EXPAND(v, x, y, z, px, py, pz)
 
 LineMesh primitives::ToLineMesh(const std::vector<GLfloat>& coordinates)
 {
