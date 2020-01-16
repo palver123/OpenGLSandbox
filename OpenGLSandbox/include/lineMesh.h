@@ -4,11 +4,11 @@
 #include <vector>
 
 class LineMesh {
-	GLuint vertexBuffer;
+	GLuint vertexBuffer, indexBuffer;
 	GLsizei numTriangles;
 
 public:
-	static constexpr GLsizei kVertexStride = 7;
+	static constexpr GLsizei kVertexStride = 10;
 	GLuint ID;
 
 	LineMesh(const std::vector<GLfloat>& vertices);

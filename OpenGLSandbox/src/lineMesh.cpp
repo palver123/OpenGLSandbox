@@ -6,14 +6,18 @@ namespace {
 	void PrepareInputAssembler()
 	{
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+		glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(9 * sizeof(GLfloat)));
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(2);
+		glEnableVertexAttribArray(3);
 	}
 }
 
 LineMesh::LineMesh(const vector<GLfloat>& vertices):
-	numTriangles(static_cast<GLsizei>(vertices.size() / kVertexStride))
+	numTriangles(static_cast<GLsizei>(vertices.size() / 2))
 {
 	glGenVertexArrays(1, &ID);
 	Bind();
@@ -26,6 +30,23 @@ LineMesh::LineMesh(const vector<GLfloat>& vertices):
 	// IA
 	PrepareInputAssembler();
 
+	std::vector<GLuint> indices;
+	indices.reserve(numTriangles * 3);
+    for (int i = 0; i < numTriangles / 2; ++i)
+    {
+		const auto base = 4 * i;
+		indices.push_back(base + 0);
+		indices.push_back(base + 1);
+		indices.push_back(base + 2);
+
+		indices.push_back(base + 3);
+		indices.push_back(base + 2);
+		indices.push_back(base + 1);
+	}
+	glGenBuffers(1, &indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
+
 	glBindVertexArray(0);
 }
 
@@ -33,6 +54,8 @@ LineMesh::~LineMesh()
 {
 	glDeleteVertexArrays(1, &ID);
 	glDeleteBuffers(1, &vertexBuffer);
+	if (indexBuffer > 0)
+		glDeleteBuffers(1, &indexBuffer);
 }
 
 void LineMesh::Bind() const
@@ -41,47 +64,66 @@ void LineMesh::Bind() const
 }
 
 void LineMesh::DrawMe() const {
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, numTriangles);
+	glDrawElements(GL_TRIANGLES, 3 * numTriangles, GL_UNSIGNED_INT, nullptr);
 }
+
+#define EXPAND(v, x, y, z, px, py, pz, nx, ny, nz) \
+	v.push_back(x);	\
+    v.push_back(y);	\
+    v.push_back(z);	\
+    v.push_back(px);	\
+    v.push_back(py);	\
+    v.push_back(pz);	\
+    v.push_back(nx); \
+    v.push_back(ny); \
+    v.push_back(nz); \
+	v.push_back(1.0f); \
+	v.push_back(x);	\
+    v.push_back(y);	\
+    v.push_back(z);	\
+    v.push_back(px);	\
+    v.push_back(py);	\
+    v.push_back(pz);	\
+    v.push_back(nx); \
+    v.push_back(ny); \
+    v.push_back(nz); \
+	v.push_back(-1.0f);
+
+#define EXPAND_START(v, x, y, z, nx, ny, nz) EXPAND(v, x, y, z, x, y, z, nx, ny, nz)
+#define EXPAND_END(v, x, y, z, px, py, pz)  EXPAND(v, x, y, z, px, py, pz, x, y, z)
 
 LineMesh primitives::ToLineMesh(const std::vector<GLfloat>& coordinates)
 {
-	if (coordinates.empty() || coordinates.size() % 3 != 0)
+	auto plLength = coordinates.size() / 3;
+	if (plLength < 2 || coordinates.size() % 3 != 0)
 		throw exception("Number of vertices is not OK.");
 
 	vector<GLfloat> vertices;
-	vertices.reserve(coordinates.size() / 3 * LineMesh::kVertexStride * 2);
-	auto prevX = 2* coordinates[0] - coordinates[3];
-	auto prevY = 2 * coordinates[1] - coordinates[4];
-	auto prevZ = 2 * coordinates[2] - coordinates[5];
+	vertices.reserve((plLength - 1) * 4 * LineMesh::kVertexStride);
+	auto prevX = coordinates[0];
+	auto prevY = coordinates[1];
+	auto prevZ = coordinates[2];
 
-
-    for (size_t i = 0; i < coordinates.size(); i += 3)
+	EXPAND_START(vertices, prevX, prevY, prevZ, coordinates[3], coordinates[4], coordinates[5]);
+    for (size_t i = 1; i < plLength - 1; ++i)
     {
-		const auto x = coordinates[i];
-		const auto y = coordinates[i + 1];
-		const auto z = coordinates[i + 2];
+		const auto x = coordinates[3 * i];
+		const auto y = coordinates[3 * i + 1];
+		const auto z = coordinates[3 * i + 2];
+		const auto nextX = coordinates[3 * i + 3];
+		const auto nextY = coordinates[3 * i + 4];
+		const auto nextZ = coordinates[3 * i + 5];
 
-		vertices.push_back(x);
-		vertices.push_back(y);
-		vertices.push_back(z);
-		vertices.push_back(prevX);
-		vertices.push_back(prevY);
-		vertices.push_back(prevZ);
-		vertices.push_back(-1.0f);
-
-		vertices.push_back(x);
-		vertices.push_back(y);
-		vertices.push_back(z);
-		vertices.push_back(prevX);
-		vertices.push_back(prevY);
-		vertices.push_back(prevZ);
-		vertices.push_back(1.0f);
+		EXPAND_END(vertices, x, y, z, prevX, prevY, prevZ);
+		EXPAND_START(vertices, x, y, z, nextX, nextY, nextZ);
 
 		prevX = x;
 		prevY = y;
 		prevZ = z;
 	}
+
+	const auto lastIdx = coordinates.size() - 3;
+	EXPAND_END(vertices, coordinates[lastIdx], coordinates[lastIdx + 1], coordinates[lastIdx + 2], prevX, prevY, prevZ);
 
 	return LineMesh{ vertices };
 }
