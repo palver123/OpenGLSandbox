@@ -4,12 +4,14 @@ using namespace std;
 
 constexpr auto siz = sizeof(GLfloat);
 
-void PrepareInputAssembler()
-{
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * siz, (GLvoid*)0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * siz, (GLvoid*)(3 * siz));
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
+namespace {
+	void PrepareInputAssembler()
+	{
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, Mesh::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, Mesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+	}
 }
 
 Mesh::Mesh(const vector<GLfloat>& vertices)
