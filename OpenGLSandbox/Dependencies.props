@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ExternalsDir>D:/_Git/</ExternalsDir>
+    <ExternalsDir>$(SolutionDir)../</ExternalsDir>
     <IncludePath>$(ExternalsDir)glfw/include;$(ExternalsDir)glad/include;$(ExternalsDir)glm;$(IncludePath)</IncludePath>
     <LibraryPath>$(ExternalsDir)glfw/bin/$(Platform)/$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
