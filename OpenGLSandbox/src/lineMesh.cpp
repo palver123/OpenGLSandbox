@@ -46,9 +46,16 @@ void LineMesh::DrawMe() const {
 
 LineMesh primitives::ToLineMesh(const std::vector<GLfloat>& coordinates)
 {
+	if (coordinates.empty() || coordinates.size() % 3 != 0)
+		throw exception("Number of vertices is not OK.");
+
 	vector<GLfloat> vertices;
 	vertices.reserve(coordinates.size() / 3 * LineMesh::kVertexStride * 2);
-	GLfloat prevX, prevY, prevZ;
+	auto prevX = 2* coordinates[0] - coordinates[3];
+	auto prevY = 2 * coordinates[1] - coordinates[4];
+	auto prevZ = 2 * coordinates[2] - coordinates[5];
+
+
     for (size_t i = 0; i < coordinates.size(); i += 3)
     {
 		const auto x = coordinates[i];
