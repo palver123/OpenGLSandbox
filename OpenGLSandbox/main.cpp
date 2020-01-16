@@ -10,6 +10,9 @@
 
 using namespace std;
 
+static constexpr int kWindowWidth = 800;
+static constexpr int kWindowHeight = 600;
+
 glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -20,7 +23,7 @@ double yaw = -90;
 double pitch = 0;
 bool firstMouse = true;
 
-GLFWwindow* CreateMainWindow(int width = 800, int height = 600);
+GLFWwindow* CreateMainWindow(int width, int height);
 void OnKeyEvent(GLFWwindow* window, int key, int scancode, int action, int mode);
 void ProcessInput(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -29,7 +32,7 @@ int main()
 {
     glfwInit();
 
-    const auto window = CreateMainWindow();
+    const auto window = CreateMainWindow(kWindowWidth, kWindowHeight);
     if (nullptr == window)
     {
         cout << "Failed to create window" << endl;
@@ -44,7 +47,7 @@ int main()
         return -1;
     }
 
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, kWindowWidth, kWindowHeight);
     glEnable(GL_DEPTH_TEST);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetCursorPosCallback(window, mouse_callback);
