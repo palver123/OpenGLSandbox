@@ -22,6 +22,9 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{E78682AA-5A06-4553-AB12-F538CB365220}</ProjectGuid>
     <RootNamespace>OpenGLSandbox</RootNamespace>
+    <OutDir>$(SolutionDir)../bin/$(Platform)/$(Configuration)/</OutDir>
+    <SrcDir>$(SolutionDir)../src/</SrcDir>
+    <ResourcesDir>$(SolutionDir)../resources/</ResourcesDir>
   </PropertyGroup>
   <Import Project="BuildToolset_vs2015.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -66,9 +69,6 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-    <IncludePath>include;$(IncludePath)</IncludePath>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -120,33 +120,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\mesh.cpp" />
-    <ClCompile Include="src\shader.cpp" />
-    <ClCompile Include="src\texture.cpp" />
-    <ClCompile Include="src\glad.c" />
+    <ClCompile Include="$(SrcDir)main.cpp" />
+    <ClCompile Include="$(SrcDir)mesh.cpp" />
+    <ClCompile Include="$(SrcDir)shader.cpp" />
+    <ClCompile Include="$(SrcDir)texture.cpp" />
+    <ClCompile Include="$(ExternalsDir)glad/src/glad.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\mesh.h" />
-    <ClInclude Include="include\shader.h" />
-    <ClInclude Include="include\texture.h" />
-    <ClInclude Include="include\stb_image.h" />
+    <ClInclude Include="$(SrcDir)mesh.h" />
+    <ClInclude Include="$(SrcDir)shader.h" />
+    <ClInclude Include="$(SrcDir)texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\basicFS.glsl">
+    <None Include="$(SrcDir)shaders\basicFS.glsl">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="shaders\basicVS.glsl">
+    <None Include="$(SrcDir)shaders\basicVS.glsl">
       <DeploymentContent>true</DeploymentContent>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="textures\awesomeface.png">
+    <Image Include="$(ResourcesDir)textures\awesomeface.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="textures\container.jpg">
+    <Image Include="$(ResourcesDir)textures\container.jpg">
       <DeploymentContent>true</DeploymentContent>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\externals\glfw\src\glfw.vcxproj">
+      <Project>{8e5c9abd-ac7d-323c-8080-5dc46614ac01}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -154,8 +158,8 @@
   <Target Name="CopyResources" AfterTargets="Build">
     <Message Text="Copy stuff ..." />
     <ItemGroup>
-      <Shaders2Copy Include="shaders/*.glsl" />
-      <Textures2Copy Include="textures/*" />
+      <Shaders2Copy Include="$(SrcDir)shaders/*.glsl" />
+      <Textures2Copy Include="$(ResourcesDir)textures/*" />
     </ItemGroup>
     <Copy SourceFiles="@(Shaders2Copy)" DestinationFolder="$(OutDir)" />
     <Copy SourceFiles="@(Textures2Copy)" DestinationFolder="$(OutDir)" />
