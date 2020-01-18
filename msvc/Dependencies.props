@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='RelWithDebInfo'">
-    <GLFWBuildConfiguration>RelWithDebInfo</GLFWBuildConfiguration>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='MinSizeRel'">
-    <GLFWBuildConfiguration>MinSizeRel</GLFWBuildConfiguration>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <GLFWBuildConfiguration>Release</GLFWBuildConfiguration>
-  </PropertyGroup>
-
   <PropertyGroup>
     <ExternalsDir>$(SolutionDir)../externals//</ExternalsDir>
     <IncludePath>$(ExternalsDir)glfw/include;$(ExternalsDir)glad/include;$(ExternalsDir)glm;$(ExternalsDir)stb_image;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ExternalsDir)glfw/src/$(GLFWBuildConfiguration);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ExternalsDir)glfw/src/$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
