@@ -120,22 +120,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="$(SrcDir)main.cpp" />
-    <ClCompile Include="$(SrcDir)mesh.cpp" />
-    <ClCompile Include="$(SrcDir)shader.cpp" />
-    <ClCompile Include="$(SrcDir)texture.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\mesh.cpp" />
+    <ClCompile Include="..\src\shader.cpp" />
+    <ClCompile Include="..\src\texture.cpp" />
     <ClCompile Include="$(ExternalsDir)glad/src/glad.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(SrcDir)mesh.h" />
-    <ClInclude Include="$(SrcDir)shader.h" />
-    <ClInclude Include="$(SrcDir)texture.h" />
+    <ClInclude Include="..\src\mesh.h" />
+    <ClInclude Include="..\src\shader.h" />
+    <ClInclude Include="..\src\texture.h" />
+    <ClInclude Include="..\src\FPScamera.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(SrcDir)shaders\basicFS.glsl">
+    <None Include="..\src\shaders\basicFS.glsl">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(SrcDir)shaders\basicVS.glsl">
+    <None Include="..\src\shaders\basicVS.glsl">
       <DeploymentContent>true</DeploymentContent>
     </None>
   </ItemGroup>
@@ -158,7 +159,7 @@
   <Target Name="CopyResources" AfterTargets="Build">
     <Message Text="Copy stuff ..." />
     <ItemGroup>
-      <Shaders2Copy Include="$(SrcDir)shaders/*.glsl" />
+      <Shaders2Copy Include="..\src\shaders/*.glsl" />
       <Textures2Copy Include="$(ResourcesDir)textures/*" />
     </ItemGroup>
     <Copy SourceFiles="@(Shaders2Copy)" DestinationFolder="$(OutDir)" />

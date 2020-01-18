@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="$(SrcDir)main.cpp" />
-    <ClCompile Include="$(SrcDir)mesh.cpp" />
-    <ClCompile Include="$(SrcDir)shader.cpp" />
-    <ClCompile Include="$(SrcDir)texture.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\mesh.cpp" />
+    <ClCompile Include="..\src\shader.cpp" />
+    <ClCompile Include="..\src\texture.cpp" />
     <ClCompile Include="$(ExternalsDir)glad/src/glad.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(SrcDir)mesh.h" />
-    <ClInclude Include="$(SrcDir)shader.h" />
-    <ClInclude Include="$(SrcDir)texture.h" />
+    <ClInclude Include="..\src\mesh.h" />
+    <ClInclude Include="..\src\shader.h" />
+    <ClInclude Include="..\src\texture.h" />
+    <ClInclude Include="..\src\FPScamera.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="$(ResourcesDir)textures\awesomeface.png">
@@ -21,10 +22,10 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(SrcDir)shaders\basicFS.glsl">
+    <None Include="..\src\shaders\basicFS.glsl">
       <Filter>shaders</Filter>
     </None>
-    <None Include="$(SrcDir)shaders\basicVS.glsl">
+    <None Include="..\src\shaders\basicVS.glsl">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>
