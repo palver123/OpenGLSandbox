@@ -10,6 +10,7 @@
       <Filter>entities</Filter>
     </ClCompile>
     <ClCompile Include="..\externals\glad\src\glad.c" />
+    <ClCompile Include="..\src\lineMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\mesh.h" />
@@ -20,6 +21,7 @@
     <ClInclude Include="..\src\entities\RotatingCube.h">
       <Filter>entities</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\lineMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="$(ResourcesDir)textures\awesomeface.png">
@@ -34,6 +36,12 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="..\src\shaders\basicVS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\src\shaders\linesFS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\src\shaders\linesVS.glsl">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

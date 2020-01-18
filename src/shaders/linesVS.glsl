@@ -28,6 +28,6 @@ void main() {
   normal *= thickness/2.0;
   normal.x /= aspectRatio;
 
-  vec4 offset = vec4(gl_VertexID % 2 == 0 ? normal : -normal, 0.0, 1.0);
+  vec4 offset = vec4(gl_VertexID % 2 == 0 ? normal : -normal, 0.0, 0.0);
   gl_Position = currentProjected + offset;
 }

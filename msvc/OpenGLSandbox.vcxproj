@@ -145,10 +145,10 @@
     <None Include="..\src\shaders\basicVS.glsl">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="shaders\linesFS.glsl">
+    <None Include="..\src\shaders\linesFS.glsl">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="shaders\linesVS.glsl">
+    <None Include="..\src\shaders\linesVS.glsl">
       <DeploymentContent>true</DeploymentContent>
     </None>
   </ItemGroup>
