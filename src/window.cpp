@@ -30,6 +30,7 @@ MyWindow::MyWindow(int width, int height):
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     glWindow = glfwCreateWindow(width, height, "LearnOpenGL", nullptr, nullptr);
+    _camera.aspectRatio = width / static_cast<float>(height);
     onlyInstanceInTheProgram = this;
 }
 
