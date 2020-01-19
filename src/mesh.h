@@ -5,18 +5,19 @@
 
 class Mesh {
     GLuint vertexBuffer, indexBuffer;
-	GLsizei numTriangles;
+    GLsizei numTriangles;
+
+    void Bind() const;
 
 public:
-	static constexpr GLsizei kVertexStride = 5;
-	GLuint ID;
+    static constexpr GLsizei kVertexStride = 5;
+    GLuint ID;
 
     Mesh(const std::vector<GLfloat>& vertices);
     Mesh(const std::vector<GLfloat>& vertices, const std::vector<GLuint> indices);
     ~Mesh();
 
-    void Bind() const;
-	void DrawMe() const;
+    void DrawMe() const;
 };
 
 namespace primitives

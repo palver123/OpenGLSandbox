@@ -5,13 +5,21 @@
     <ClCompile Include="..\src\mesh.cpp" />
     <ClCompile Include="..\src\shader.cpp" />
     <ClCompile Include="..\src\texture.cpp" />
-    <ClCompile Include="$(ExternalsDir)glad/src/glad.c" />
+    <ClCompile Include="..\src\window.cpp" />
+    <ClCompile Include="..\src\entities\RotatingCube.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\externals\glad\src\glad.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\mesh.h" />
     <ClInclude Include="..\src\shader.h" />
     <ClInclude Include="..\src\texture.h" />
     <ClInclude Include="..\src\FPScamera.h" />
+    <ClInclude Include="..\src\window.h" />
+    <ClInclude Include="..\src\entities\RotatingCube.h">
+      <Filter>entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="$(ResourcesDir)textures\awesomeface.png">
@@ -35,6 +43,9 @@
     </Filter>
     <Filter Include="textures">
       <UniqueIdentifier>{bb992c1f-89d9-452d-8d5e-abf00207c84c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="entities">
+      <UniqueIdentifier>{246078e3-5268-440c-9ec2-920f5a670f41}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

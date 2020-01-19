@@ -10,7 +10,7 @@ out vec4 color;
 
 void main()
 {
-	vec4 wood = texture(ourTexture1, TexCoord);
-	vec4 smiley = texture(ourTexture2, TexCoord);
-	color = mix(wood, smiley, texBlendFactor);
+    vec4 wood = texture(ourTexture1, TexCoord);
+    vec4 smiley = texture(ourTexture2, TexCoord);
+    color = mix(wood, smiley, texBlendFactor);
 }

@@ -77,27 +77,26 @@ bool LinkShaders(GLuint vertexShader, GLuint fragmentShader, GLuint& program)
     return true;
 }
 
-Shader::Shader(const GLchar * vertexSourcePath, const GLchar * fragmentSourcePath)
-{
-    GLuint vertexShader;
-    if (!CompileShader(GL_VERTEX_SHADER, vertexSourcePath, vertexShader))
-        throw runtime_error("Failed to compile vertex shader");
 
-    GLuint fragmentShader;
-    if (!CompileShader(GL_FRAGMENT_SHADER, fragmentSourcePath, fragmentShader))
-    {
-        glDeleteShader(vertexShader);
-        throw runtime_error("Failed to compile fragment shader");
-    }
 
-    const auto linkedSuccessfully = LinkShaders(vertexShader, fragmentShader, Program);
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-    if (!linkedSuccessfully)
-        throw runtime_error("Failed to link shader program");
+void uniforms::ModelViewProj::Locate(GLint shader) {
+    lModel = glGetUniformLocation(shader, "model");
+    lView = glGetUniformLocation(shader, "view");
+    lProj = glGetUniformLocation(shader, "projection");
 }
 
-void Shader::Use() const
-{
-    glUseProgram(Program);
+void uniforms::Basic::Locate(GLint shader) {
+    ModelViewProj::Locate(shader);
+    lBlendFactor = glGetUniformLocation(shader, "texBlendFactor");
+}
+
+void uniforms::ModelViewProj::Submit(const GLfloat** data) const {
+    glUniformMatrix4fv(lModel, 1, GL_FALSE, data[0]);
+    glUniformMatrix4fv(lView, 1, GL_FALSE, data[1]);
+    glUniformMatrix4fv(lProj, 1, GL_FALSE, data[2]);
+}
+
+void uniforms::Basic::Submit(const GLfloat** data) const {
+    ModelViewProj::Submit(data);
+    glUniform1f(lBlendFactor, *data[3]);
 }

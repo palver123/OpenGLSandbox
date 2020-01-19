@@ -3,17 +3,17 @@
 using namespace std;
 
 namespace {
-	void PrepareInputAssembler()
-	{
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, Mesh::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, Mesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
-	}
+    void PrepareInputAssembler()
+    {
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, Mesh::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, Mesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+    }
 }
 
 Mesh::Mesh(const vector<GLfloat>& vertices):
-	numTriangles(static_cast<GLsizei>(vertices.size() / kVertexStride * 2))
+    numTriangles(static_cast<GLsizei>(vertices.size() / kVertexStride * 2))
 {
     glGenVertexArrays(1, &ID);
     Bind();
@@ -55,7 +55,8 @@ void Mesh::Bind() const
 }
 
 void Mesh::DrawMe() const {
-	glDrawArrays(GL_TRIANGLES, 0, numTriangles);
+    Bind();
+    glDrawArrays(GL_TRIANGLES, 0, numTriangles);
 }
 
 Mesh primitives::Square(GLfloat halfSize)
