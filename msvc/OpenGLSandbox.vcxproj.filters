@@ -11,6 +11,9 @@
     </ClCompile>
     <ClCompile Include="..\externals\glad\src\glad.c" />
     <ClCompile Include="..\src\lineMesh.cpp" />
+    <ClCompile Include="..\src\entities\ThickLineCollection.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\mesh.h" />
@@ -22,6 +25,9 @@
       <Filter>entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\lineMesh.h" />
+    <ClInclude Include="..\src\entities\ThickLineCollection.h">
+      <Filter>entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="$(ResourcesDir)textures\awesomeface.png">

@@ -90,6 +90,13 @@ void uniforms::Basic::Locate(GLint shader) {
     lBlendFactor = glGetUniformLocation(shader, "texBlendFactor");
 }
 
+void uniforms::ThickLines::Locate(GLint shader) {
+    ModelViewProj::Locate(shader);
+    lColor = glGetUniformLocation(shader, "matDiffColor");
+    lThickness = glGetUniformLocation(shader, "thickness");
+    lAspect = glGetUniformLocation(shader, "aspectRatio");
+}
+
 void uniforms::ModelViewProj::Submit(const GLfloat** data) const {
     glUniformMatrix4fv(lModel, 1, GL_FALSE, data[0]);
     glUniformMatrix4fv(lView, 1, GL_FALSE, data[1]);
@@ -99,4 +106,12 @@ void uniforms::ModelViewProj::Submit(const GLfloat** data) const {
 void uniforms::Basic::Submit(const GLfloat** data) const {
     ModelViewProj::Submit(data);
     glUniform1f(lBlendFactor, *data[3]);
+}
+
+void uniforms::ThickLines::Submit(const GLfloat** data) const {
+    ModelViewProj::Submit(data);
+    const auto color = data[3];
+    glUniform3f(lColor, color[0], color[1], color[2]);
+    glUniform1f(lThickness, *data[4] / 600.0f);
+    glUniform1f(lAspect, *data[5]);
 }

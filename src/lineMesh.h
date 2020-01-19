@@ -4,21 +4,22 @@
 #include <vector>
 
 class LineMesh {
-	GLuint vertexBuffer, indexBuffer;
-	GLsizei numTriangles;
+    GLuint vertexBuffer, indexBuffer;
+    GLsizei numTriangles;
+
+    void Bind() const;
 
 public:
-	static constexpr GLsizei kVertexStride = 6;
-	GLuint ID;
+    static constexpr GLsizei kVertexStride = 6;
+    GLuint ID;
 
-	LineMesh(const std::vector<GLfloat>& vertices);
-	~LineMesh();
+    LineMesh(const std::vector<GLfloat>& vertices);
+    ~LineMesh();
 
-	void Bind() const;
-	void DrawMe() const;
+    void DrawMe() const;
 };
 
 namespace primitives
 {
-	LineMesh ToLineMesh(const std::vector<GLfloat>& coordinates);
+    LineMesh ToLineMesh(const std::vector<GLfloat>& coordinates);
 }

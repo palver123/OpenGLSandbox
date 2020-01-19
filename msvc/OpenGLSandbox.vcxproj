@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClCompile Include="..\externals\glad\src\glad.c" />
     <ClCompile Include="..\src\entities\RotatingCube.cpp" />
+    <ClCompile Include="..\src\entities\ThickLineCollection.cpp" />
     <ClCompile Include="..\src\lineMesh.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\mesh.cpp" />
@@ -131,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\entities\RotatingCube.h" />
+    <ClInclude Include="..\src\entities\ThickLineCollection.h" />
     <ClInclude Include="..\src\lineMesh.h" />
     <ClInclude Include="..\src\mesh.h" />
     <ClInclude Include="..\src\shader.h" />

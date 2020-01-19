@@ -17,7 +17,7 @@ RotatingCube::RotatingCube() :
 void RotatingCube::Update(double currentTime)
 {
     _blendFactor = static_cast<float>(sin(currentTime) / 4 + 0.25);
-    _worldTransform = glm::rotate(glm::mat4(1.f), glm::radians((GLfloat)(currentTime * 50.0)), glm::vec3(1.0f, 0.0f, 0.0f));;
+    _worldTransform = glm::rotate(glm::mat4(1.f), glm::radians((GLfloat)(currentTime * 50.0)), glm::vec3(1.0f, 0.0f, 0.0f));
 }
 
 void RotatingCube::Render(const FPSCamera& camera) const

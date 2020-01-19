@@ -63,4 +63,14 @@ namespace uniforms {
     private:
         GLint lBlendFactor;
     };
+
+    struct ThickLines : ModelViewProj {
+        void Locate(GLint shader);
+        void Submit(const GLfloat** data) const;
+
+    private:
+        GLint lColor;
+        GLint lThickness;
+        GLint lAspect;
+    };
 }
