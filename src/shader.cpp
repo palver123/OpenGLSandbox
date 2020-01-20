@@ -90,9 +90,13 @@ void uniforms::Basic::Locate(GLint shader) {
     lBlendFactor = glGetUniformLocation(shader, "texBlendFactor");
 }
 
-void uniforms::ThickLines::Locate(GLint shader) {
+void uniforms::JustColor::Locate(GLint shader) {
     ModelViewProj::Locate(shader);
     lColor = glGetUniformLocation(shader, "matDiffColor");
+}
+
+void uniforms::ThickLines::Locate(GLint shader) {
+    JustColor::Locate(shader);
     lThickness = glGetUniformLocation(shader, "thickness");
     lAspect = glGetUniformLocation(shader, "aspectRatio");
 }
@@ -108,10 +112,14 @@ void uniforms::Basic::Submit(const GLfloat** data) const {
     glUniform1f(lBlendFactor, *data[3]);
 }
 
-void uniforms::ThickLines::Submit(const GLfloat** data) const {
+void uniforms::JustColor::Submit(const GLfloat** data) const {
     ModelViewProj::Submit(data);
     const auto color = data[3];
     glUniform3f(lColor, color[0], color[1], color[2]);
-    glUniform1f(lThickness, *data[4] / 600.0f);
+}
+
+void uniforms::ThickLines::Submit(const GLfloat** data) const {
+    JustColor::Submit(data);
+    glUniform1f(lThickness, *data[4] / 300.0f);
     glUniform1f(lAspect, *data[5]);
 }

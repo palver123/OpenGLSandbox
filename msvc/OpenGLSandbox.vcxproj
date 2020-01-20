@@ -121,9 +121,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\externals\glad\src\glad.c" />
+    <ClCompile Include="..\src\entities\GLLineCollection.cpp" />
     <ClCompile Include="..\src\entities\RotatingCube.cpp" />
     <ClCompile Include="..\src\entities\ThickLineCollection.cpp" />
     <ClCompile Include="..\src\lineMesh.cpp" />
+    <ClCompile Include="..\src\lineMesh2.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\mesh.cpp" />
     <ClCompile Include="..\src\shader.cpp" />
@@ -131,9 +133,11 @@
     <ClCompile Include="..\src\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\entities\GLLineCollection.h" />
     <ClInclude Include="..\src\entities\RotatingCube.h" />
     <ClInclude Include="..\src\entities\ThickLineCollection.h" />
     <ClInclude Include="..\src\lineMesh.h" />
+    <ClInclude Include="..\src\lineMesh2.h" />
     <ClInclude Include="..\src\mesh.h" />
     <ClInclude Include="..\src\shader.h" />
     <ClInclude Include="..\src\texture.h" />
@@ -151,6 +155,9 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="..\src\shaders\linesVS.glsl">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\src\shaders\passthroughVS.glsl">
       <DeploymentContent>true</DeploymentContent>
     </None>
   </ItemGroup>

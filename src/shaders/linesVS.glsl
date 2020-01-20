@@ -25,7 +25,7 @@ void main() {
       (auxScreen - currentScreen) :
       (currentScreen - auxScreen));
   vec2 normal = vec2(-dir.y, dir.x);
-  normal *= thickness/2.0;
+  normal *= thickness * currentProjected.w * 0.5f;
   normal.x /= aspectRatio;
 
   vec4 offset = vec4(gl_VertexID % 2 == 0 ? normal : -normal, 0.0, 0.0);

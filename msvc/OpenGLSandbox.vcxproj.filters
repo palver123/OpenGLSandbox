@@ -14,6 +14,10 @@
     <ClCompile Include="..\src\entities\ThickLineCollection.cpp">
       <Filter>entities</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\lineMesh2.cpp" />
+    <ClCompile Include="..\src\entities\GLLineCollection.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\mesh.h" />
@@ -26,6 +30,10 @@
     </ClInclude>
     <ClInclude Include="..\src\lineMesh.h" />
     <ClInclude Include="..\src\entities\ThickLineCollection.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lineMesh2.h" />
+    <ClInclude Include="..\src\entities\GLLineCollection.h">
       <Filter>entities</Filter>
     </ClInclude>
   </ItemGroup>
@@ -48,6 +56,9 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="..\src\shaders\linesVS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="..\src\shaders\passthroughVS.glsl">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>
