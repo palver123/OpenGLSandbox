@@ -44,7 +44,7 @@
     <None Include="..\src\shaders\basicVS.glsl">
       <Filter>shaders</Filter>
     </None>
-    <None Include="..\src\shaders\linesFS.glsl">
+    <None Include="..\src\shaders\colorFS.glsl">
       <Filter>shaders</Filter>
     </None>
     <None Include="..\src\shaders\linesVS.glsl">

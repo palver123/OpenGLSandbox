@@ -5,7 +5,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 ThickLineCollection::ThickLineCollection(const LineMesh& mesh) :
-    _shader{ "linesVS.glsl", "linesFS.glsl" },
+    _shader{ "linesVS.glsl", "colorFS.glsl" },
     _mesh(mesh),
     _color(0.78f, 0.14f, 0.0f)
 {

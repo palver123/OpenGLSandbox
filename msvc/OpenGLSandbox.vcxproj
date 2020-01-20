@@ -147,7 +147,7 @@
     <None Include="..\src\shaders\basicVS.glsl">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="..\src\shaders\linesFS.glsl">
+    <None Include="..\src\shaders\colorFS.glsl">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="..\src\shaders\linesVS.glsl">
