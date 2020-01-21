@@ -28,16 +28,16 @@ LineMesh::LineMesh(const vector<GLfloat>& vertices):
 
     std::vector<GLuint> indices;
     indices.reserve(numTriangles * 3);
-    for (int i = 0; i < numTriangles; ++i)
+    for (int quadIdx = 0; quadIdx < numTriangles / 2; ++quadIdx)
     {
-        const auto base = 4 * i;
-        indices.push_back(base + 0);
-        indices.push_back(base + 1);
-        indices.push_back(base + 2);
+        const auto baseVIdx = 4 * quadIdx;
+        indices.push_back(baseVIdx + 0);
+        indices.push_back(baseVIdx + 1);
+        indices.push_back(baseVIdx + 2);
 
-        indices.push_back(base + 3);
-        indices.push_back(base + 2);
-        indices.push_back(base + 1);
+        indices.push_back(baseVIdx + 3);
+        indices.push_back(baseVIdx + 2);
+        indices.push_back(baseVIdx + 1);
     }
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
