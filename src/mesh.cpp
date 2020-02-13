@@ -13,7 +13,7 @@ namespace {
 }
 
 Mesh::Mesh(const vector<GLfloat>& vertices):
-    numTriangles(static_cast<GLsizei>(vertices.size() / kVertexStride * 2))
+    _elementCount(static_cast<GLsizei>(vertices.size() / kVertexStride))
 {
     glGenVertexArrays(1, &ID);
     Bind();
@@ -56,7 +56,7 @@ void Mesh::Bind() const
 
 void Mesh::DrawMe() const {
     Bind();
-    glDrawArrays(GL_TRIANGLES, 0, numTriangles);
+    glDrawArrays(GL_TRIANGLES, 0, _elementCount);
 }
 
 Mesh primitives::Square(GLfloat halfSize)

@@ -5,7 +5,7 @@
 
 class Mesh {
     GLuint vertexBuffer, indexBuffer;
-    GLsizei numTriangles;
+    GLsizei _elementCount;
 
     void Bind() const;
 
