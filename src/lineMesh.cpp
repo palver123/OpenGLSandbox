@@ -13,15 +13,15 @@ namespace {
 }
 
 LineMesh::LineMesh(const vector<GLfloat>& vertices, bool strip) :
-    numIndices(static_cast<GLsizei>(strip ? vertices.size() / kVertexStride : vertices.size() / kVertexStride)),
+    _elementCount(static_cast<GLsizei>(vertices.size() / kVertexStride)),
     _strip(strip)
 {
     glGenVertexArrays(1, &ID);
     Bind();
 
     // VB
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glGenBuffers(1, &_vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
 
     // IA
@@ -33,7 +33,7 @@ LineMesh::LineMesh(const vector<GLfloat>& vertices, bool strip) :
 LineMesh::~LineMesh()
 {
     glDeleteVertexArrays(1, &ID);
-    glDeleteBuffers(1, &vertexBuffer);
+    glDeleteBuffers(1, &_vertexBuffer);
 }
 
 void LineMesh::Bind() const
@@ -43,7 +43,7 @@ void LineMesh::Bind() const
 
 void LineMesh::DrawMe() const {
     Bind();
-    glDrawArrays(_strip ? GL_LINE_STRIP : GL_LINES, 0, numIndices);
+    glDrawArrays(_strip ? GL_LINE_STRIP : GL_LINES, 0, _elementCount);
 }
 
 LineMesh LineMesh::SplitPolyline(const std::vector<GLfloat>& coordinates) {

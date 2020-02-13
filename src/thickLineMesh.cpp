@@ -15,22 +15,22 @@ namespace {
 }
 
 ThickLineMesh::ThickLineMesh(const vector<GLfloat>& vertices):
-    numTriangles(static_cast<GLsizei>(vertices.size() / kVertexStride / 2))
+    _elementCount(static_cast<GLsizei>(3 * vertices.size() / kVertexStride / 2))
 {
     glGenVertexArrays(1, &ID);
     Bind();
 
     // VB
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glGenBuffers(1, &_vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
 
     // IA
     PrepareInputAssembler();
 
     std::vector<GLuint> indices;
-    indices.reserve(numTriangles * 3);
-    for (int quadIdx = 0; quadIdx < numTriangles / 2; ++quadIdx)
+    indices.reserve(_elementCount);
+    for (int quadIdx = 0; quadIdx < _elementCount / 6; ++quadIdx)
     {
         const auto baseVIdx = 4 * quadIdx;
         indices.push_back(baseVIdx + 0);
@@ -41,8 +41,8 @@ ThickLineMesh::ThickLineMesh(const vector<GLfloat>& vertices):
         indices.push_back(baseVIdx + 2);
         indices.push_back(baseVIdx + 1);
     }
-    glGenBuffers(1, &indexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glGenBuffers(1, &_indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
 
     glBindVertexArray(0);
@@ -51,9 +51,9 @@ ThickLineMesh::ThickLineMesh(const vector<GLfloat>& vertices):
 ThickLineMesh::~ThickLineMesh()
 {
     glDeleteVertexArrays(1, &ID);
-    glDeleteBuffers(1, &vertexBuffer);
-    if (indexBuffer > 0)
-        glDeleteBuffers(1, &indexBuffer);
+    glDeleteBuffers(1, &_vertexBuffer);
+    if (_indexBuffer > 0)
+        glDeleteBuffers(1, &_indexBuffer);
 }
 
 void ThickLineMesh::Bind() const
@@ -63,7 +63,7 @@ void ThickLineMesh::Bind() const
 
 void ThickLineMesh::DrawMe() const {
     Bind();
-    glDrawElements(GL_TRIANGLES, 3 * numTriangles, GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, _elementCount, GL_UNSIGNED_INT, nullptr);
 }
 
 #define EXPAND(v, x, y, z, ax, ay, az) \

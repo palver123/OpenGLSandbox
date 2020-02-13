@@ -4,7 +4,7 @@
 #include <vector>
 
 class Mesh {
-    GLuint vertexBuffer, indexBuffer;
+    GLuint _vertexBuffer, _indexBuffer;
     GLsizei _elementCount;
 
     void Bind() const;

@@ -21,8 +21,8 @@ Mesh::Mesh(const vector<GLfloat>& vertices):
     Bind();
 
     // VB
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glGenBuffers(1, &_vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
 
     // IA
@@ -36,8 +36,8 @@ Mesh::Mesh(const vector<GLfloat>& vertices, const vector<GLuint> indices) : Mesh
     Bind();
 
     // IB
-    glGenBuffers(1, &indexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glGenBuffers(1, &_indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
 
     glBindVertexArray(0);
@@ -46,9 +46,9 @@ Mesh::Mesh(const vector<GLfloat>& vertices, const vector<GLuint> indices) : Mesh
 Mesh::~Mesh()
 {
     glDeleteVertexArrays(1, &ID);
-    glDeleteBuffers(1, &vertexBuffer);
-    if (indexBuffer > 0)
-        glDeleteBuffers(1, &indexBuffer);
+    glDeleteBuffers(1, &_vertexBuffer);
+    if (_indexBuffer > 0)
+        glDeleteBuffers(1, &_indexBuffer);
 }
 
 void Mesh::Bind() const

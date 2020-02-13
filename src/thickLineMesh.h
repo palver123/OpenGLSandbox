@@ -4,8 +4,8 @@
 #include <vector>
 
 class ThickLineMesh {
-    GLuint vertexBuffer, indexBuffer;
-    GLsizei numTriangles;
+    GLuint _vertexBuffer, _indexBuffer;
+    GLsizei _elementCount;
 
     void Bind() const;
 

@@ -4,8 +4,8 @@
 #include <vector>
 
 class LineMesh {
-    GLuint vertexBuffer;
-    GLsizei numIndices;
+    GLuint _vertexBuffer;
+    GLsizei _elementCount;
     bool _strip;
 
     void Bind() const;
