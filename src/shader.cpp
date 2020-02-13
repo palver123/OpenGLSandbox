@@ -120,6 +120,8 @@ void uniforms::JustColor::Submit(const GLfloat** data) const {
 
 void uniforms::ThickLines::Submit(const GLfloat** data) const {
     JustColor::Submit(data);
-    glUniform1f(lThickness, *data[4] / 300.0f);
+    GLint viewportPosAndSize[4];
+    glGetIntegerv(GL_VIEWPORT, viewportPosAndSize);
+    glUniform1f(lThickness, *data[4] / (viewportPosAndSize[3] * 0.5f));
     glUniform1f(lAspect, *data[5]);
 }
