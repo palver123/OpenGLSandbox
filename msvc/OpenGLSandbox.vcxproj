@@ -124,6 +124,7 @@
     <ClCompile Include="..\src\entities\GLLineCollection.cpp" />
     <ClCompile Include="..\src\entities\RotatingCube.cpp" />
     <ClCompile Include="..\src\entities\ThickLineCollection.cpp" />
+    <ClCompile Include="..\src\entities\ThickLineStrip.cpp" />
     <ClCompile Include="..\src\thickLineMesh.cpp" />
     <ClCompile Include="..\src\lineMesh.cpp" />
     <ClCompile Include="..\src\main.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="..\src\entities\GLLineCollection.h" />
     <ClInclude Include="..\src\entities\RotatingCube.h" />
     <ClInclude Include="..\src\entities\ThickLineCollection.h" />
+    <ClInclude Include="..\src\entities\ThickLineStrip.h" />
     <ClInclude Include="..\src\thickLineMesh.h" />
     <ClInclude Include="..\src\lineMesh.h" />
     <ClInclude Include="..\src\mesh.h" />
@@ -154,6 +156,7 @@
     <None Include="..\src\shaders\colorFS.glsl">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="..\src\shaders\lineStripsVS.glsl" />
     <None Include="..\src\shaders\linesVS.glsl">
       <DeploymentContent>true</DeploymentContent>
     </None>

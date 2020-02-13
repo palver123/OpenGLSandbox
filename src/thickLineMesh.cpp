@@ -14,8 +14,9 @@ namespace {
     }
 }
 
-ThickLineMesh::ThickLineMesh(const vector<GLfloat>& vertices):
-    _elementCount(static_cast<GLsizei>(3 * vertices.size() / kVertexStride / 2))
+ThickLineMesh::ThickLineMesh(const vector<GLfloat>& vertices, bool strip):
+    _elementCount(static_cast<GLsizei>(vertices.size() / kVertexStride * (strip ? 1 : (3.0 / 2)))),
+    _strip(strip)
 {
     glGenVertexArrays(1, &ID);
     Bind();
@@ -28,22 +29,26 @@ ThickLineMesh::ThickLineMesh(const vector<GLfloat>& vertices):
     // IA
     PrepareInputAssembler();
 
-    std::vector<GLuint> indices;
-    indices.reserve(_elementCount);
-    for (int quadIdx = 0; quadIdx < _elementCount / 6; ++quadIdx)
-    {
-        const auto baseVIdx = 4 * quadIdx;
-        indices.push_back(baseVIdx + 0);
-        indices.push_back(baseVIdx + 1);
-        indices.push_back(baseVIdx + 2);
+    if (strip) {
+        _indexBuffer = -1;
+    } else {
+        std::vector<GLuint> indices;
+        indices.reserve(_elementCount);
+        for (int quadIdx = 0; quadIdx < _elementCount / 6; ++quadIdx)
+        {
+            const auto baseVIdx = 4 * quadIdx;
+            indices.push_back(baseVIdx + 0);
+            indices.push_back(baseVIdx + 1);
+            indices.push_back(baseVIdx + 2);
 
-        indices.push_back(baseVIdx + 3);
-        indices.push_back(baseVIdx + 2);
-        indices.push_back(baseVIdx + 1);
+            indices.push_back(baseVIdx + 3);
+            indices.push_back(baseVIdx + 2);
+            indices.push_back(baseVIdx + 1);
+        }
+        glGenBuffers(1, &_indexBuffer);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
     }
-    glGenBuffers(1, &_indexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
 
     glBindVertexArray(0);
 }
@@ -63,7 +68,10 @@ void ThickLineMesh::Bind() const
 
 void ThickLineMesh::DrawMe() const {
     Bind();
-    glDrawElements(GL_TRIANGLES, _elementCount, GL_UNSIGNED_INT, nullptr);
+    if (_strip)
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, _elementCount);
+    else 
+        glDrawElements(GL_TRIANGLES, _elementCount, GL_UNSIGNED_INT, nullptr);
 }
 
 #define EXPAND(v, x, y, z, ax, ay, az) \
@@ -87,7 +95,7 @@ ThickLineMesh primitives::ToLineMesh(const std::vector<GLfloat>& coordinates)
 {
     auto plLength = coordinates.size() / 3;
     if (plLength < 2 || coordinates.size() % 3 != 0)
-        return ThickLineMesh{ {} };
+        return ThickLineMesh{ {}, false };
 
     vector<GLfloat> vertices;
     vertices.reserve((plLength - 1) * 4 * kVertexStride);
@@ -116,5 +124,16 @@ ThickLineMesh primitives::ToLineMesh(const std::vector<GLfloat>& coordinates)
     const auto lastIdx = coordinates.size() - 3;
     EXPAND_END(vertices, coordinates[lastIdx], coordinates[lastIdx + 1], coordinates[lastIdx + 2], prevX, prevY, prevZ);
 
-    return ThickLineMesh{ vertices };
+    return ThickLineMesh{ vertices, false };
+}
+
+ThickLineMesh primitives::ToLineStripMesh(const std::vector<GLfloat>& coordinates) {
+    return ThickLineMesh({
+        0.0f, -1.0f, 0.0f,      -1.0f,  0.15f, 0.0f,
+        0.0f, -1.0f, 0.0f,       1.0f, -0.15f, 0.0f,
+        0.15f, 0.0f, 0.0f,      -1.0f,  0.0f, 0.0f,
+        0.15f, 0.0f, 0.0f,       1.0f,  0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,       -1.0f,  0.15f, 0.0f,
+        0.0f, 1.0f, 0.0f,        1.0f, -0.15f, 0.0f,
+        }, true);
 }

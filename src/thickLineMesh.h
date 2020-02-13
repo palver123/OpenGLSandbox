@@ -6,13 +6,14 @@
 class ThickLineMesh {
     GLuint _vertexBuffer, _indexBuffer;
     GLsizei _elementCount;
+    bool _strip;
 
     void Bind() const;
 
 public:
     GLuint ID;
 
-    ThickLineMesh(const std::vector<GLfloat>& vertices);
+    ThickLineMesh(const std::vector<GLfloat>& vertices, bool strip);
     ~ThickLineMesh();
 
     void DrawMe() const;
@@ -21,4 +22,5 @@ public:
 namespace primitives
 {
     ThickLineMesh ToLineMesh(const std::vector<GLfloat>& coordinates);
+    ThickLineMesh ToLineStripMesh(const std::vector<GLfloat>& coordinates);
 }
