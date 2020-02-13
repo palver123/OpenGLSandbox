@@ -1,16 +1,16 @@
-#include "lineMesh2.h"
+#include "lineMesh.h"
 
 using namespace std;
 
 namespace {
     void PrepareInputAssembler()
     {
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, LineMesh2::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
         glEnableVertexAttribArray(0);
     }
 }
 
-LineMesh2::LineMesh2(const vector<GLfloat>& vertices, bool strip) :
+LineMesh::LineMesh(const vector<GLfloat>& vertices, bool strip) :
     numIndices(static_cast<GLsizei>(strip ? vertices.size() / kVertexStride : vertices.size() / kVertexStride)),
     _strip(strip)
 {
@@ -28,26 +28,26 @@ LineMesh2::LineMesh2(const vector<GLfloat>& vertices, bool strip) :
     glBindVertexArray(0);
 }
 
-LineMesh2::~LineMesh2()
+LineMesh::~LineMesh()
 {
     glDeleteVertexArrays(1, &ID);
     glDeleteBuffers(1, &vertexBuffer);
 }
 
-void LineMesh2::Bind() const
+void LineMesh::Bind() const
 {
     glBindVertexArray(ID);
 }
 
-void LineMesh2::DrawMe() const {
+void LineMesh::DrawMe() const {
     Bind();
     glDrawArrays(_strip ? GL_LINE_STRIP : GL_LINES, 0, numIndices);
 }
 
-LineMesh2 LineMesh2::SplitPolyline(const std::vector<GLfloat>& coordinates) {
+LineMesh LineMesh::SplitPolyline(const std::vector<GLfloat>& coordinates) {
     const auto numPoints = coordinates.size() / 3;
     if (coordinates.empty() || numPoints < 2)
-        return LineMesh2({}, false);
+        return LineMesh({}, false);
 
     std::vector<GLfloat> vertices;
     vertices.reserve((numPoints - 1) * 6);
@@ -70,5 +70,5 @@ LineMesh2 LineMesh2::SplitPolyline(const std::vector<GLfloat>& coordinates) {
     vertices.push_back(coordinates[last + 1]);
     vertices.push_back(coordinates[last + 2]);
 
-    return LineMesh2{ vertices, false };
+    return LineMesh{ vertices, false };
 }

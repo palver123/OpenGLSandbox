@@ -13,11 +13,11 @@
     <ClCompile Include="..\src\entities\ThickLineCollection.cpp">
       <Filter>entities</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\lineMesh2.cpp" />
     <ClCompile Include="..\src\entities\GLLineCollection.cpp">
       <Filter>entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\thickLineMesh.cpp" />
+    <ClCompile Include="..\src\lineMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\mesh.h" />
@@ -31,11 +31,11 @@
     <ClInclude Include="..\src\entities\ThickLineCollection.h">
       <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\lineMesh2.h" />
     <ClInclude Include="..\src\entities\GLLineCollection.h">
       <Filter>entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\thickLineMesh.h" />
+    <ClInclude Include="..\src\lineMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="$(ResourcesDir)textures\awesomeface.png">

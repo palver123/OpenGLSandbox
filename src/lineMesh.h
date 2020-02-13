@@ -3,7 +3,7 @@
 #include <glad\glad.h>
 #include <vector>
 
-class LineMesh2 {
+class LineMesh {
     GLuint vertexBuffer;
     GLsizei numIndices;
     bool _strip;
@@ -14,10 +14,10 @@ public:
     static constexpr GLsizei kVertexStride = 3;
     GLuint ID;
 
-    LineMesh2(const std::vector<GLfloat>& vertices, bool strip);
-    ~LineMesh2();
+    LineMesh(const std::vector<GLfloat>& vertices, bool strip);
+    ~LineMesh();
 
     void DrawMe() const;
 
-    static LineMesh2 SplitPolyline(const std::vector<GLfloat>& vertices);
+    static LineMesh SplitPolyline(const std::vector<GLfloat>& vertices);
 };

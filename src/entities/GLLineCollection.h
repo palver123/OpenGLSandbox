@@ -1,16 +1,16 @@
 #pragma once
 
 #include "../shader.h"
-#include "../lineMesh2.h"
+#include "../lineMesh.h"
 #include "../FPScamera.h"
 
 class GLLineCollection
 {
     Shader<uniforms::JustColor> _shader;
-    LineMesh2 _mesh;
+    LineMesh _mesh;
 
 public:
-    GLLineCollection(const LineMesh2& mesh);
+    GLLineCollection(const LineMesh& mesh);
 
     void Update(double currentTime);
     void Render(const FPSCamera& camera) const;

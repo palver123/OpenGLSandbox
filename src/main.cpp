@@ -59,8 +59,8 @@ int main()
         -0.25f, 1.0f, 0.0f
     };
     const auto lineMesh = primitives::ToLineMesh(coordinates);
-    const LineMesh2 strip(coordinates, true);
-    const auto lines = LineMesh2::SplitPolyline(coordinates);
+    const LineMesh strip(coordinates, true);
+    const auto lines = LineMesh::SplitPolyline(coordinates);
     entity = std::make_unique<ThickLineCollection>(lineMesh);
     linesGL = std::make_unique<GLLineCollection>(strip);
     linesGL->worldTransform = glm::translate(glm::mat4(1), glm::vec3(0.5f, 0, 0));

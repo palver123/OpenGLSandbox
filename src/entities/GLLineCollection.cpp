@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-GLLineCollection::GLLineCollection(const LineMesh2& mesh) :
+GLLineCollection::GLLineCollection(const LineMesh& mesh) :
     _shader{ "passthroughVS.glsl", "colorFS.glsl" },
     _mesh(mesh),
     color(0.38f, 0.84f, 0.8f)
