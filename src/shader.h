@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glad\glad.h>
+#include <stdexcept>
 
 bool CompileShader(GLenum type, const GLchar * sourcePath, GLuint& shader);
 bool LinkShaders(GLuint vertexShader, GLuint fragmentShader, GLuint& program);
