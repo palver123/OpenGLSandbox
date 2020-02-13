@@ -3,10 +3,12 @@
 using namespace std;
 
 namespace {
+    static constexpr GLsizei kVertexStride = 5;
+
     void PrepareInputAssembler()
     {
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, Mesh::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, Mesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, kVertexStride * sizeof(GLfloat), (GLvoid*)0);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
     }

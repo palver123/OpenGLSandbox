@@ -10,7 +10,6 @@ class Mesh {
     void Bind() const;
 
 public:
-    static constexpr GLsizei kVertexStride = 5;
     GLuint ID;
 
     Mesh(const std::vector<GLfloat>& vertices);

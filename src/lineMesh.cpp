@@ -3,9 +3,11 @@
 using namespace std;
 
 namespace {
+    static constexpr GLsizei kVertexStride = 3;
+
     void PrepareInputAssembler()
     {
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, kVertexStride * sizeof(GLfloat), (GLvoid*)0);
         glEnableVertexAttribArray(0);
     }
 }

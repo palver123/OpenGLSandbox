@@ -3,10 +3,12 @@
 using namespace std;
 
 namespace {
+    static constexpr GLsizei kVertexStride = 6;
+
     void PrepareInputAssembler()
     {
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, ThickLineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, ThickLineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, kVertexStride * sizeof(GLfloat), (GLvoid*)0);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
     }
@@ -88,7 +90,7 @@ ThickLineMesh primitives::ToLineMesh(const std::vector<GLfloat>& coordinates)
         return ThickLineMesh{ {} };
 
     vector<GLfloat> vertices;
-    vertices.reserve((plLength - 1) * 4 * ThickLineMesh::kVertexStride);
+    vertices.reserve((plLength - 1) * 4 * kVertexStride);
     auto prevX = coordinates[0];
     auto prevY = coordinates[1];
     auto prevZ = coordinates[2];

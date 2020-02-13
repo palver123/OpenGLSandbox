@@ -11,7 +11,6 @@ class LineMesh {
     void Bind() const;
 
 public:
-    static constexpr GLsizei kVertexStride = 3;
     GLuint ID;
 
     LineMesh(const std::vector<GLfloat>& vertices, bool strip);

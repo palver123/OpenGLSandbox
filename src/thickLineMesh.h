@@ -10,7 +10,6 @@ class ThickLineMesh {
     void Bind() const;
 
 public:
-    static constexpr GLsizei kVertexStride = 6;
     GLuint ID;
 
     ThickLineMesh(const std::vector<GLfloat>& vertices);
