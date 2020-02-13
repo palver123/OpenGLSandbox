@@ -12,6 +12,36 @@ namespace {
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
     }
+
+    struct Vector3 {
+        GLfloat x, y, z;
+
+        Vector3 Add(const Vector3& rhs) const { return { x + rhs.x, y + rhs.y, z + rhs.z }; }
+        Vector3 Subtract(const Vector3& rhs) const { return { x - rhs.x, y - rhs.y, z - rhs.z }; }
+        Vector3 Scale(const GLfloat s) const { return { x * s, y * s, z * s }; }
+
+        Vector3 RotatedCCW90() const { return { -y, x, z }; }
+    };
+
+    void Store(const Vector3& v, GLfloat* coords, int i) {
+        coords[i] = v.x;
+        coords[i + 1] = v.y;
+        coords[i + 2] = v.z;
+    }
+
+    void Store2(const Vector3& v, GLfloat* coords, int i) {
+        Store(v, coords, i);
+        Store(v, coords, i + kVertexStride);
+    }
+
+    void Store2Normals(const Vector3& v, GLfloat* coords, int i) {
+        Store(v, coords, i);
+        Store(v.Scale(-1), coords, i + kVertexStride);
+    }
+
+    Vector3 CalculateNormal(const Vector3& prev, const Vector3& next) {
+        return next.Subtract(prev).Scale(0.5f).RotatedCCW90();
+    }
 }
 
 ThickLineMesh::ThickLineMesh(const vector<GLfloat>& vertices, bool strip):
@@ -128,12 +158,28 @@ ThickLineMesh primitives::ToLineMesh(const std::vector<GLfloat>& coordinates)
 }
 
 ThickLineMesh primitives::ToLineStripMesh(const std::vector<GLfloat>& coordinates) {
-    return ThickLineMesh({
-        0.0f, -1.0f, 0.0f,      -1.0f,  0.15f, 0.0f,
-        0.0f, -1.0f, 0.0f,       1.0f, -0.15f, 0.0f,
-        0.15f, 0.0f, 0.0f,      -1.0f,  0.0f, 0.0f,
-        0.15f, 0.0f, 0.0f,       1.0f,  0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,       -1.0f,  0.15f, 0.0f,
-        0.0f, 1.0f, 0.0f,        1.0f, -0.15f, 0.0f,
-        }, true);
+    auto plLength = coordinates.size() / 3;
+    if (plLength < 2 || coordinates.size() % 3 != 0)
+        return ThickLineMesh{ {}, true };
+
+    vector<GLfloat> vertices(plLength * 2 * kVertexStride);
+    Vector3 prev;
+    auto curr = Vector3{ coordinates[0], coordinates[1], coordinates[2] };
+    auto next = Vector3{ coordinates[3], coordinates[4], coordinates[5] };
+    Store2(curr, vertices.data(), 0);
+    Store2Normals(CalculateNormal(curr.Scale(2).Subtract(next), next), vertices.data(), 3);
+
+    for (size_t i = 1; i < plLength - 1; ++i)
+    {
+        prev = curr;
+        curr = next;
+        next = Vector3{ coordinates[3 * i + 3], coordinates[3 * i + 4], coordinates[3 * i + 5] };
+
+        Store2(curr, vertices.data(), i * 2 * kVertexStride);
+        Store2Normals(CalculateNormal(prev, next), vertices.data(), i * 2 * kVertexStride + 3);
+    }
+
+    Store2(next, vertices.data(), (plLength - 1) * 2 * kVertexStride);
+    Store2Normals(CalculateNormal(prev, curr.Scale(2).Subtract(prev)), vertices.data(), (plLength - 1) * 2 * kVertexStride + 3);
+    return ThickLineMesh(vertices, true);
 }
