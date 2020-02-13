@@ -10,7 +10,6 @@
       <Filter>entities</Filter>
     </ClCompile>
     <ClCompile Include="..\externals\glad\src\glad.c" />
-    <ClCompile Include="..\src\lineMesh.cpp" />
     <ClCompile Include="..\src\entities\ThickLineCollection.cpp">
       <Filter>entities</Filter>
     </ClCompile>
@@ -18,6 +17,7 @@
     <ClCompile Include="..\src\entities\GLLineCollection.cpp">
       <Filter>entities</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\thickLineMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\mesh.h" />
@@ -28,7 +28,6 @@
     <ClInclude Include="..\src\entities\RotatingCube.h">
       <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\lineMesh.h" />
     <ClInclude Include="..\src\entities\ThickLineCollection.h">
       <Filter>entities</Filter>
     </ClInclude>
@@ -36,6 +35,7 @@
     <ClInclude Include="..\src\entities\GLLineCollection.h">
       <Filter>entities</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\thickLineMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="$(ResourcesDir)textures\awesomeface.png">

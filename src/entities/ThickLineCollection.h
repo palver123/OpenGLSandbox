@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../shader.h"
-#include "../lineMesh.h"
+#include "../thickLineMesh.h"
 #include "../FPScamera.h"
 
 class ThickLineCollection
@@ -10,10 +10,10 @@ class ThickLineCollection
     glm::vec3 _color;
 
     Shader<uniforms::ThickLines> _shader;
-    LineMesh _mesh;
+    ThickLineMesh _mesh;
 
 public:
-    ThickLineCollection(const LineMesh& mesh);
+    ThickLineCollection(const ThickLineMesh& mesh);
 
     void Update(double currentTime);
     void Render(const FPSCamera& camera) const;

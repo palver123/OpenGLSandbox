@@ -3,7 +3,7 @@
 #include <glad\glad.h>
 #include <vector>
 
-class LineMesh {
+class ThickLineMesh {
     GLuint vertexBuffer, indexBuffer;
     GLsizei numTriangles;
 
@@ -13,13 +13,13 @@ public:
     static constexpr GLsizei kVertexStride = 6;
     GLuint ID;
 
-    LineMesh(const std::vector<GLfloat>& vertices);
-    ~LineMesh();
+    ThickLineMesh(const std::vector<GLfloat>& vertices);
+    ~ThickLineMesh();
 
     void DrawMe() const;
 };
 
 namespace primitives
 {
-    LineMesh ToLineMesh(const std::vector<GLfloat>& coordinates);
+    ThickLineMesh ToLineMesh(const std::vector<GLfloat>& coordinates);
 }

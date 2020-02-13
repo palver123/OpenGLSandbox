@@ -1,18 +1,18 @@
-#include "lineMesh.h"
+#include "thickLineMesh.h"
 
 using namespace std;
 
 namespace {
     void PrepareInputAssembler()
     {
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, LineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, ThickLineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)0);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, ThickLineMesh::kVertexStride * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
     }
 }
 
-LineMesh::LineMesh(const vector<GLfloat>& vertices):
+ThickLineMesh::ThickLineMesh(const vector<GLfloat>& vertices):
     numTriangles(static_cast<GLsizei>(vertices.size() / kVertexStride / 2))
 {
     glGenVertexArrays(1, &ID);
@@ -46,7 +46,7 @@ LineMesh::LineMesh(const vector<GLfloat>& vertices):
     glBindVertexArray(0);
 }
 
-LineMesh::~LineMesh()
+ThickLineMesh::~ThickLineMesh()
 {
     glDeleteVertexArrays(1, &ID);
     glDeleteBuffers(1, &vertexBuffer);
@@ -54,12 +54,12 @@ LineMesh::~LineMesh()
         glDeleteBuffers(1, &indexBuffer);
 }
 
-void LineMesh::Bind() const
+void ThickLineMesh::Bind() const
 {
     glBindVertexArray(ID);
 }
 
-void LineMesh::DrawMe() const {
+void ThickLineMesh::DrawMe() const {
     Bind();
     glDrawElements(GL_TRIANGLES, 3 * numTriangles, GL_UNSIGNED_INT, nullptr);
 }
@@ -81,14 +81,14 @@ void LineMesh::DrawMe() const {
 #define EXPAND_START(v, x, y, z, nx, ny, nz) EXPAND(v, x, y, z, nx, ny, nz)
 #define EXPAND_END(v, x, y, z, px, py, pz)  EXPAND(v, x, y, z, px, py, pz)
 
-LineMesh primitives::ToLineMesh(const std::vector<GLfloat>& coordinates)
+ThickLineMesh primitives::ToLineMesh(const std::vector<GLfloat>& coordinates)
 {
     auto plLength = coordinates.size() / 3;
     if (plLength < 2 || coordinates.size() % 3 != 0)
-        return LineMesh{ {} };
+        return ThickLineMesh{ {} };
 
     vector<GLfloat> vertices;
-    vertices.reserve((plLength - 1) * 4 * LineMesh::kVertexStride);
+    vertices.reserve((plLength - 1) * 4 * ThickLineMesh::kVertexStride);
     auto prevX = coordinates[0];
     auto prevY = coordinates[1];
     auto prevZ = coordinates[2];
@@ -114,5 +114,5 @@ LineMesh primitives::ToLineMesh(const std::vector<GLfloat>& coordinates)
     const auto lastIdx = coordinates.size() - 3;
     EXPAND_END(vertices, coordinates[lastIdx], coordinates[lastIdx + 1], coordinates[lastIdx + 2], prevX, prevY, prevZ);
 
-    return LineMesh{ vertices };
+    return ThickLineMesh{ vertices };
 }
