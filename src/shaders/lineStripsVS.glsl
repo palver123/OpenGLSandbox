@@ -17,8 +17,8 @@ void main() {
   vec4 extrudedPointProjected = projViewModel * vec4(position + a_normal, 1.0);
 
   //get 2D screen space with W divide and aspect correction
-  vec2 polylinePointScreen = polylinePointProjected.xy / polylinePointProjected.w * aspectVec;
-  vec2 extrudedPointScreen = extrudedPointProjected.xy / extrudedPointProjected.w * aspectVec;
+  vec2 polylinePointScreen = polylinePointProjected.xy / abs(polylinePointProjected.w) * aspectVec;
+  vec2 extrudedPointScreen = extrudedPointProjected.xy / abs(extrudedPointProjected.w) * aspectVec;
 
   vec2 normalScreen = normalize(extrudedPointScreen - polylinePointScreen);
   normalScreen *= thickness * polylinePointProjected.w * 0.5f;
