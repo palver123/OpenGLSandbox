@@ -5,7 +5,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 ThickLineCollection::ThickLineCollection(const ThickLineMesh& mesh) :
-    _shader{ "linesVS.glsl", "colorFS.glsl" },
+    _shader{ mesh.IsStrip() ? "lineStripsVS.glsl" : "linesVS.glsl", "colorFS.glsl" },
     _mesh(mesh),
     _color(0.78f, 0.14f, 0.0f)
 {

@@ -103,6 +103,8 @@ void ThickLineMesh::DrawMe() const {
         glDrawElements(GL_TRIANGLES, _elementCount, GL_UNSIGNED_INT, nullptr);
 }
 
+bool ThickLineMesh::IsStrip() const { return _strip; }
+
 #define EXPAND(v, x, y, z, ax, ay, az) \
     v.push_back(x);     \
     v.push_back(y);     \

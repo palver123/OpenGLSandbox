@@ -17,6 +17,7 @@ public:
     ~ThickLineMesh();
 
     void DrawMe() const;
+    bool IsStrip() const;
 };
 
 namespace primitives

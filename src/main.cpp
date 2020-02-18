@@ -1,7 +1,7 @@
 #define LINE_MESH_PROTO
 
 #ifdef LINE_MESH_PROTO
-#include "entities\ThickLineStrip.h"
+#include "entities\ThickLineCollection.h"
 #include "entities/GLLineCollection.h"
 #else
 #include "entities\RotatingCube.h"
@@ -15,7 +15,7 @@ constexpr int kWindowWidth = 800;
 constexpr int kWindowHeight = 600;
 
 #ifdef LINE_MESH_PROTO
-std::unique_ptr<ThickLineStrip> entity;
+std::unique_ptr<ThickLineCollection> entity;
 std::unique_ptr<GLLineCollection> linesGL;
 std::unique_ptr<GLLineCollection> linesGL2;
 #else
@@ -61,7 +61,7 @@ int main()
     const auto lineMesh = primitives::ToLineStripMesh(coordinates);
     const LineMesh strip(coordinates, true);
     const auto lines = LineMesh::SplitPolyline(coordinates);
-    entity = std::make_unique<ThickLineStrip>(lineMesh);
+    entity = std::make_unique<ThickLineCollection>(lineMesh);
     linesGL = std::make_unique<GLLineCollection>(strip);
     linesGL->worldTransform = glm::translate(glm::mat4(1), glm::vec3(0.5f, 0, 0));
     linesGL2 = std::make_unique<GLLineCollection>(lines);

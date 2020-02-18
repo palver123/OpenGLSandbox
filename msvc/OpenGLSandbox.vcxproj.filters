@@ -16,9 +16,6 @@
     <ClCompile Include="..\src\entities\GLLineCollection.cpp">
       <Filter>entities</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\entities\ThickLineStrip.cpp">
-      <Filter>entities</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\thickLineMesh.cpp" />
     <ClCompile Include="..\src\lineMesh.cpp" />
   </ItemGroup>
@@ -35,9 +32,6 @@
       <Filter>entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\GLLineCollection.h">
-      <Filter>entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\ThickLineStrip.h">
       <Filter>entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\thickLineMesh.h" />

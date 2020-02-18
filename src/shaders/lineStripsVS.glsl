@@ -30,7 +30,7 @@ void main() {
   vec2 toNext = normalize(nextScreen - currentScreen);
   vec2 tangent = normalize(toCurr + toNext);
   vec2 normalScreen = vec2(-tangent.y, tangent.x);
-  normalScreen *= thickness / dot(tangent, toCurr) * currentProjected.w * 0.5f;
+  normalScreen *= thickness / dot(tangent, toCurr) * currentProjected.w * 0.5;
   normalScreen.x /= aspectRatio;
 
   // Do the extrusion
